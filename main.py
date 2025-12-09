@@ -22,14 +22,14 @@ SMA_SHORT = 10
 SMA_LONG = 50
 
 # Initialize Binance client
-client = Client(API_KEY, API_SECRET)
-
+# Initialize Binance client correctly for TESTNET
 if TESTNET:
-    client.API_URL = "https://testnet.binance.vision/api"
-    log.info("Using TESTNET")
-else:
-    log.info("Using LIVE environment")
+    Client.API_URL = "https://testnet.binance.vision/api"
+    Client.WEBSITE_URL = "https://testnet.binance.vision"
+    Client.STREAM_URL = "wss://testnet.binance.vision/ws"
+    log.info("Using TESTNET endpoints")
 
+client = Client(API_KEY, API_SECRET)
 # Fetch klines
 def get_klines(symbol, interval, limit=200):
     data = client.get_klines(symbol=symbol, interval=interval, limit=limit)
